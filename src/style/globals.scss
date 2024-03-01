@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+.basicBacground {
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.imputClass {
+  @apply border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-pink-600 focus:border-pink-600 focus:outline-none;
+}
+
+.inputLabel {
+  @apply block mb-2 text-sm font-medium text-white;
+}
+
+.butttonClass {
+  @apply w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800;
+}
+
+.butttonClass2 {
+  @apply text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800;
+}
+
+.brainLeafFormInput {
+  @apply h-12 my-5 border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-pink-600 focus:border-pink-600 focus:outline-none lg:mx-4;
+}
+
+.footerIcon {
+  @apply cursor-pointer hover:text-primary-700 hover:scale-110 transition-transform sm:block sm:w-1/2 my-2;
+}
+
+.footerLink {
+  @apply pt-0 cursor-pointer text-text-secondary hover:text-primary-700 transition-transform;
+  //@apply text-purple-800;
+}
+
+@media (min-width: 1024px) {
+  .importantCarouselWidth {
+    width: 50% !important;
+  }
+}

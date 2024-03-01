@@ -1,0 +1,30 @@
+[
+    {
+        "id" : 1,
+        "image": "http://moss.sk/obr/101000546.jpg",
+        "title": "img-101000546",
+        "description": "A legjobb bot!",
+        "buttonText": "Megnézem"
+    },
+    {
+        "id" : 2,
+        "image": "http://moss.sk/obr/101001249.jpg",
+        "title": "img-101001249",
+        "description": "A legjobb orsó!",
+        "buttonText": "Megnézem"
+    },
+    {
+        "id" : 3,
+        "image": "http://moss.sk/obr/101001506.jpg",
+        "title": "img-101001506",
+        "description": "A legjobb sátor!",
+        "buttonText": "Megnézem"
+    },
+    {
+        "id" : 4,
+        "image": "http://moss.sk/obr/101001506.jpg",
+        "title": "img-101001506",
+        "description": "A legjobb horog!",
+        "buttonText": "Megnézem"
+    }
+]
