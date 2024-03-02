@@ -7,37 +7,22 @@ import { LinearProgress } from '@mui/material';
 
 import ProductPageCard from '@/components/UI/product/ProductPageCard';
 
-type propT = {
-    category?: string
-}
+type ProductProps = {
+    products: productT[];
+};
 
-export default function Product({ category }: propT) {
+export default function Product({ products }: ProductProps) {
 
     const {
         filteredProducts,
         setFilters,
-        loading,
-        error,
         currentPageData,
-        setPageOfNumber
+        setProductsData
     } = useShopContext();
 
     useEffect(() => {
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            category: category
-        }));
-        setPageOfNumber(1);
-
-    }, [category, setFilters, filteredProducts.length]);
-
-    if (loading) {
-        return <LinearProgress color="inherit" />;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div >
-    }
+        setProductsData(products)
+    }, [products]);
 
     return (
         <section className='w-full px-8 py-2 grid grid-cols-1 gap-8 justify-center items-center justify-items-center md:grid-cols-2 lg:grid-cols-3 lg:gap-12 2xl:grid-cols-4'>

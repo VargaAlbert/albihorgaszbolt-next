@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-const BASE_URL: string = 'http://localhost:5005';
+export const BASE_URL: string = 'http://localhost:5000';
 export const LOGIN_URL = '/auth';
 
 export default axios.create({

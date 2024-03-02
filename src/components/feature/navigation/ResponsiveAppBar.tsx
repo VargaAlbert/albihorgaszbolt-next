@@ -9,6 +9,7 @@ import {
     PRODUCT_CATEGORY,
     processString
 } from '@/utils/category';
+import { useShopContext } from "@/services/providers/ShopContext";
 import HeaderControllerIcon from '@/components/UI/navigation/HeaderControllerIcon';
 import {
     AppBar,
@@ -25,6 +26,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import logo from '@/assets/logo.png'
 
 export default function ResponsiveAppBar() {
+
+    const {
+        setPageOfNumber
+    } = useShopContext();
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -89,7 +94,9 @@ export default function ResponsiveAppBar() {
                         >
                             <MenuItem onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">
-                                    <Link href='/products'>
+                                    <Link
+                                        href='/products'
+                                        onClick={() => setPageOfNumber(1)}>
                                         {ALL_PRODUCTS}
                                     </Link>
                                 </Typography>
@@ -98,7 +105,9 @@ export default function ResponsiveAppBar() {
                             {PRODUCT_CATEGORY.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <Link href={processString(`/products/${page}`)}>
+                                        <Link
+                                            href={processString(`/products/${page}`)}
+                                            onClick={() => setPageOfNumber(1)}>
                                             {page}
                                         </Link>
                                     </Typography>

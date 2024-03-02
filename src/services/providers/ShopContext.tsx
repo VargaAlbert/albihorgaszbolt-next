@@ -30,11 +30,11 @@ export interface ShopContextProps
     UsePaginationInterface,
     UseProductsFilterInterface,
     UseProductAddCart,
-    UseFetchData,
     UseUserInterfaceDisplayInterface {
-
+    setProductsData: React.Dispatch<React.SetStateAction<productT[]>>;
     setPersist: React.Dispatch<React.SetStateAction<boolean>>;
     setAuth: React.Dispatch<React.SetStateAction<authT>>;
+
     auth: authT;
     persist: boolean;
 };
@@ -49,16 +49,15 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
     children
 }) => {
 
+    const [productsData, setProductsData] = useState<productT[]>([]);
     const [auth, setAuth] = useState<authT>(initAuth);
     const [persist, setPersist] = useLocalStorage<boolean>("persist", false);
 
     const { userInterfaceDisplay, setUserInterface, toggleDrawer } = useUserInterfaceDisplay();
 
-    const { data, loading, error } = useFetchData();
-
     const { cartItems, productAddCart, removeFromCart } = useProductAddCart();
 
-    const { filteredProducts, filters, setFilters } = useProductsFilter(data);
+    const { filteredProducts, filters, setFilters } = useProductsFilter(productsData);
 
     const { page, maxPage, currentPageData, handleChangePage, setPageOfNumber } = usePagination(filteredProducts, 6);
 
@@ -68,12 +67,10 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
         auth,
         persist,
         setPersist,
-
+        setProductsData,
 
         /* --useUserInterfaceDisplay-- */
         userInterfaceDisplay, setUserInterface, toggleDrawer,
-        /* --useFetchData-- */
-        data, loading, error,
         /* --useProductAddCart-- */
         cartItems, productAddCart, removeFromCart,
         /* --useProductsFilter-- */
