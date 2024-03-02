@@ -31,10 +31,12 @@ export interface ShopContextProps
     UseProductsFilterInterface,
     UseProductAddCart,
     UseUserInterfaceDisplayInterface {
+
     setProductsData: React.Dispatch<React.SetStateAction<productT[]>>;
     setPersist: React.Dispatch<React.SetStateAction<boolean>>;
     setAuth: React.Dispatch<React.SetStateAction<authT>>;
 
+    productsData: productT[];
     auth: authT;
     persist: boolean;
 };
@@ -55,7 +57,7 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
 
     const { userInterfaceDisplay, setUserInterface, toggleDrawer } = useUserInterfaceDisplay();
 
-    const { cartItems, productAddCart, removeFromCart } = useProductAddCart();
+    const { cartItems, productAddCart, removeFromCart, productSetQuantityCart } = useProductAddCart();
 
     const { filteredProducts, filters, setFilters } = useProductsFilter(productsData);
 
@@ -67,12 +69,13 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
         auth,
         persist,
         setPersist,
+        productsData,
         setProductsData,
 
         /* --useUserInterfaceDisplay-- */
         userInterfaceDisplay, setUserInterface, toggleDrawer,
         /* --useProductAddCart-- */
-        cartItems, productAddCart, removeFromCart,
+        cartItems, productAddCart, removeFromCart, productSetQuantityCart,
         /* --useProductsFilter-- */
         filteredProducts, filters, setFilters,
         /* --usePagination-- */

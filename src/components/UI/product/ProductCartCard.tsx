@@ -17,34 +17,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { formatPrice } from '@/utils/formatPrice';
 import ProductNumberInput from '@/components/UI/product/ProductNumberInput'
-export default function ProductCartCard({ id, quantity }: CartItemT) {
+export default function ProductCartCard({ productid, quantity, img, price, product }: CartItemT) {
 
-    const { data, productAddCart, removeFromCart } = useShopContext();
-
-    const item: productT | undefined = data.find((item) => item.productid === id);
-
-    if (!item) {
-        return null;
-    }
-
-    const {
-        productid,
-        product,
-        description,
-        img,
-        price,
-        category,
-    } = item;
+    const { productSetQuantityCart, removeFromCart } = useShopContext();
 
     const handleChange = (value: number | null) => {
         const newValue = value ?? 1
-        productAddCart(newValue, id, false);
+        productSetQuantityCart(newValue, productid, false);
     }
 
     const quantityPrice = quantity * price
 
     const deleteIlem = () => {
-        removeFromCart(id)
+        removeFromCart(productid)
     }
 
     return (

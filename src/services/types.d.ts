@@ -44,6 +44,9 @@ type filterT = {
 }
 
 type CartItemT = {
-    id: string;
+    productid: string;
     quantity: number;
+    img: string
+    product: string
+    price: number
 };

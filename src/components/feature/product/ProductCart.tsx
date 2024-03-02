@@ -46,7 +46,7 @@ export default function ProductCart({ anchor }: prop) {
             </Box>
             <List>
                 {cartItems.map((item) => (
-                    <ProductCartCard key={item.id} {...item} />
+                    <ProductCartCard key={item.productid} {...item} />
                 )).reverse()}
             </List>
         </Box>

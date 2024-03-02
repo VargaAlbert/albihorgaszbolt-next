@@ -5,7 +5,7 @@ type ProductData = {
 };
 
 export async function fetchProducAll(): Promise<ProductData> {
-    await new Promise(res => setTimeout(res, 4000))  
+    await new Promise(res => setTimeout(res, 5000))  
     try {
         const response = await axios.get<productT[]>(`/products`, {
             withCredentials: true
@@ -28,7 +28,7 @@ export async function fetchProducAll(): Promise<ProductData> {
 }
 
 export async function fetchProducByCategory(category: string): Promise<ProductData> {
-    await new Promise(res => setTimeout(res, 4000))    
+    await new Promise(res => setTimeout(res, 5000))    
     try {
         const response = await axios.get<productT[]>(`/products/${category}`, {
             withCredentials: true
