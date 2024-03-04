@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShopContext } from '@/services/providers/ShopContext';
 import { INTER_FACE_KEY } from '@/hooks/useUserInterfaceDisplay';
 
@@ -21,7 +21,13 @@ import ControllerMenuItem from './ControllerMenuItem';
 
 export default function HeaderControllerIcon() {
 
-    const { auth, setUserInterface, toggleDrawer } = useShopContext();
+    const { auth, cartAllQuantity, setUserInterface, toggleDrawer } = useShopContext();
+
+    const [isClient, setIsClient] = useState(false)
+
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
 
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -86,11 +92,11 @@ export default function HeaderControllerIcon() {
                     <Favorite className='hover:text-primary-500' fontSize="large" />
                 </IconButton>
             </Tooltip>
-            <Tooltip className='cursor-pointer' title="Kosaram">
+
+            <Tooltip title="Kosaram">
                 <IconButton onClick={toggleDrawer('right', true)} size="large" color="inherit" className="p-0">
-                    <ShoppingCart
-                        className='hover:text-primary-500'
-                        fontSize="large" />
+                    <ShoppingCart className='hover:text-primary-500' fontSize="large" />
+                    {isClient && cartAllQuantity() != 0 ? <span className="w-7 h-7 flex flex-col items-center justify-center content-center absolute top-[-12px] right-[-5px] rounded-full shadow-lg text-xs font-bold bg-red-500 text-white">{cartAllQuantity()}</span> : null}
                 </IconButton>
             </Tooltip>
         </Box>

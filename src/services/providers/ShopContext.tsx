@@ -27,6 +27,7 @@ type ShopProviderProps = {
 
 export interface ShopContextProps
     extends
+    UseFetchData,
     UsePaginationInterface,
     UseProductsFilterInterface,
     UseProductAddCart,
@@ -55,9 +56,11 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
     const [auth, setAuth] = useState<authT>(initAuth);
     const [persist, setPersist] = useLocalStorage<boolean>("persist", false);
 
+    const { data } = useFetchData();
+
     const { userInterfaceDisplay, setUserInterface, toggleDrawer } = useUserInterfaceDisplay();
 
-    const { cartItems, productAddCart, removeFromCart, productSetQuantityCart } = useProductAddCart();
+    const { cartItems, productAddCart, removeFromCart, cartAllQuantity, shopCardSum } = useProductAddCart(data);
 
     const { filteredProducts, filters, setFilters } = useProductsFilter(productsData);
 
@@ -71,11 +74,12 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
         setPersist,
         productsData,
         setProductsData,
-
+        /* --useFetchData-- */
+        data,
         /* --useUserInterfaceDisplay-- */
         userInterfaceDisplay, setUserInterface, toggleDrawer,
         /* --useProductAddCart-- */
-        cartItems, productAddCart, removeFromCart, productSetQuantityCart,
+        cartItems, productAddCart, removeFromCart, cartAllQuantity, shopCardSum,
         /* --useProductsFilter-- */
         filteredProducts, filters, setFilters,
         /* --usePagination-- */

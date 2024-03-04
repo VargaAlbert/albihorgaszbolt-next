@@ -2,24 +2,28 @@
 
 import React from 'react'
 import { useShopContext } from '@/services/providers/ShopContext';
-
+import { formatPrice } from '@/utils/formatPrice';
 import {
     Box,
     List,
     Tooltip,
     IconButton,
-    Typography
+    Typography,
+    Button,
 } from '@mui/material';
 
 import { Close, ShoppingCart } from '@mui/icons-material';
 import ProductCartCard from '@/components/UI/product/ProductCartCard';
+import LinkButton from '@/components/UI/navigation/LinkButton';
+import Link from 'next/link';
+
 type prop = {
     anchor: Anchor
 }
 
 export default function ProductCart({ anchor }: prop) {
 
-    const { cartItems, toggleDrawer } = useShopContext();
+    const { cartItems, toggleDrawer, shopCardSum } = useShopContext();
 
     return (
         <Box
@@ -28,7 +32,7 @@ export default function ProductCart({ anchor }: prop) {
             /* onKeyDown={toggleDrawer(anchor, false)} */
             className="w-96"
         >
-            <Box className="w-100 h-12 bg-background-primary flex  flex-row">
+            <Box className="h-12 bg-background-primary flex  flex-row">
                 <Box className="m-auto flex items-center">
                     <ShoppingCart className='mr-2' />
                     <Typography variant="h5" color="text.primary" className="m-auto tracking-widest">
@@ -49,6 +53,24 @@ export default function ProductCart({ anchor }: prop) {
                     <ProductCartCard key={item.productid} {...item} />
                 )).reverse()}
             </List>
+
+            <Box className="p-7 h-18 bg-background-primary flex flex-col fixed bottom-0">
+                <Box className="flex flex-row">
+                    <Typography variant="h6" color="text.primary" className="m-auto tracking-widest">
+                        Összesen:
+                    </Typography>
+                    <Typography variant="h5" color="text.primary" className="m-auto tracking-widest">
+                        {formatPrice(shopCardSum(true))} Ft
+                    </Typography>
+                </Box>
+                <Link
+                    href={'/check-cart'}
+                    onClick={toggleDrawer(anchor, false)}
+                    className="block w-80 mt-6 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
+                    TOVÁBB A PÉNZTÁRHOZ
+                </Link>
+            </Box>
+
         </Box>
     )
 }

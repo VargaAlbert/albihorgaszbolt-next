@@ -7,3 +7,5 @@ export const initAuth: authT = {
 export const initFilter: filterT = {
     category: undefined,
 }
+
+export const SHIPPING_FREE = 1290

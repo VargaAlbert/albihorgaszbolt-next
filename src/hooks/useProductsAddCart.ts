@@ -1,4 +1,5 @@
 import useLocalStorage from './useLocalStorage';
+import { SHIPPING_FREE } from './../services/initConfig';
 
 /**
  * @fileOverview Custom React hook for managing shopping cart items.
@@ -7,16 +8,10 @@ import useLocalStorage from './useLocalStorage';
 
 // Interface representing the return type of useProductAddCart
 export interface UseProductAddCart {
-    productAddCart: ( 
-        quantityOfProduct: number, 
-        productid: string, 
-        isSelfIncrease: boolean,
-        img: string,
-        product: string,
-        price: number ) => void;
-    
-    productSetQuantityCart: (quantityOfProduct: number, productid: string, isSelfIncrease: boolean) => void;
+    productAddCart: (quantityOfProduct: number, id: string, isSelfIncrease: boolean) => void;
+    shopCardSum: (shoppingFreebool: boolean) => number;
     removeFromCart: (id: string) => void;
+    cartAllQuantity: () => number;
     cartItems: CartItemT[];
 }
 
@@ -36,101 +31,44 @@ export interface UseProductAddCart {
  * const quantity = findQuantityById('product-id');
  * The CartItem[] definition can be found in @/services/types.d.ts
  */
-const useProductAddCart = (): UseProductAddCart => {
+const useProductAddCart = (data: productT[]): UseProductAddCart => {
     // Retrieve or initialize shopping cart items from local storage
     const [cartItems, setCartItems] = useLocalStorage<CartItemT[]>("shopping-cart", []);
 
+    console.log(cartItems)
     /**
-     * Adds a new item to the cart or updates an existing one.
-     *
-     * @param currItems - The current items in the cart.
-     * @param productid - The ID of the product.
-     * @param quantityOfProduct - The quantity to add or set.
-     * @param isSelfIncrease - Indicates whether to increase the quantity.
-     * @param img - The image URL of the product. Defaults to an empty string.
-     * @param product - The name of the product. Defaults to an empty string.
-     * @param price - The price of the product. Defaults to 0.
-     * @returns An updated array of cart items.
-     * @private
+     * Adds or updates a product in the shopping cart.
+     * @param {number} quantityOfProduct - Quantity of the product to add or update.
+     * @param {string} productid - Product identifier.
+     * @param {boolean} isSelfIncrease - Indicates whether to increase the quantity if the product is already in the cart.
+     * @returns {void}
      */
-    const addOrUpdateCartItem = (
-        currItems: CartItemT[],
-        productid: string,
-        quantityOfProduct: number,
-        isSelfIncrease: boolean,
-        img: string = "",
-        product: string = "",
-        price: number = 0
-    ): CartItemT[] => {
-        const existingItem = currItems.find((item) => item.productid === productid);
-        if (!existingItem) {
-            return [
-                ...currItems,
-                { 
-                    productid,
-                    quantity: quantityOfProduct,
-                    img,
-                    product,
-                    price,
-                },
-            ];
-        } else {
-            const quantityValue = isSelfIncrease
-                ? existingItem.quantity + quantityOfProduct
-                : quantityOfProduct;
-    
-            return currItems.map((item) =>
-                item.productid === productid
-                    ? {
-                          ...item,
-                          quantity: quantityValue,
-                          img: img || item.img,
-                          product: product || item.product,
-                          price: price || item.price,
-                      }
-                    : item
-            );
-        }
-    };
-    
-    /**
-     * Adds a new item to the cart or updates an existing one with the specified details.
-     *
-     * @param quantityOfProduct - The quantity of the product to add or set.
-     * @param productid - The ID of the product.
-     * @param isSelfIncrease - Indicates whether to increase the quantity.
-     * @param img - The image URL of the product.
-     * @param product - The name of the product.
-     * @param price - The price of the product.
-     * @returns void
-     */
-    const productAddCart = (
-        quantityOfProduct: number, 
-        productid: string, 
-        isSelfIncrease: boolean,
-        img: string,
-        product: string,
-        price: number
-    ): void => {
-        setCartItems((currItems) =>
-            addOrUpdateCartItem(currItems, productid, quantityOfProduct, isSelfIncrease, img, product, price)
-        );
-    };
+    const productAddCart = (quantityOfProduct: number, productid: string, isSelfIncrease: boolean): void => {
+        setCartItems((currItems) => {
+            const existingItem = currItems.find((item) => item.productid === productid);
+            if (!existingItem) {
+                return [
+                    ...currItems, 
+                    { 
+                        productid, 
+                        quantity: quantityOfProduct 
+                    }];
+            } else {
+                return currItems.map((item) => {
+                    if (item.productid === productid) {
+                        const quantityValue = isSelfIncrease
+                            ? item.quantity + quantityOfProduct
+                            : quantityOfProduct;
 
-    /**
-     * Sets the quantity of an item in the cart or updates an existing one.
-     *
-     * @param quantityOfProduct - The quantity to set or add.
-     * @param productid - The ID of the product.
-     * @param isSelfIncrease - Indicates whether to increase the quantity.
-     * @returns void
-     */
-    const productSetQuantityCart = (
-        quantityOfProduct: number,
-        productid: string,
-        isSelfIncrease: boolean
-    ): void => {
-        setCartItems((currItems) => addOrUpdateCartItem(currItems, productid, quantityOfProduct, isSelfIncrease));
+                        return {
+                            ...item,
+                            quantity: quantityValue,
+                        };
+                    }
+                    return item;
+                });
+            }
+        }); 
     };
 
     /**
@@ -146,16 +84,39 @@ const useProductAddCart = (): UseProductAddCart => {
 
     /**
      * Finds the quantity of a product in the shopping cart by its id.
-     * @param {string} productid - Product identifier to search for.
+     * @param {string} id - Product identifier to search for.
      * @returns {number | null} - Quantity of the product if found, or null if not found.
      * @private
      */
-    const findQuantityById = (productid: string): number | null => {
-        return cartItems.find((item) => item.productid === productid)?.quantity || null;
+    const findQuantityById = (id: string): number | null => {
+        return cartItems.find((item) => item.productid === id)?.quantity || null;
+    };
+
+    /**
+     * The shopping cart determines the quantity of the product 
+     * @returns {number} - Quantity of the product if found, or null if not found.
+     */
+    const cartAllQuantity = () =>  {
+        return cartItems.reduce((quantity, item) => item.quantity + quantity, 0) | 0
+    }
+
+    const shopCardSum = (shoppingFreebool: boolean) => {
+        const value = cartItems.reduce((total, cartItem) => {
+            const item = data.find((i) => i.productid === cartItem.productid);
+            return total + (item?.price || 0) * cartItem.quantity;
+        }, 0);
+    
+        return shoppingFreebool ? value + SHIPPING_FREE : value;
     };
 
     // Return an object containing cartItems, productAddCart, removeFromCart, and findQuantityById
-    return { cartItems, productAddCart, removeFromCart, productSetQuantityCart };
+    return { 
+        cartItems,
+        productAddCart, 
+        removeFromCart, 
+        cartAllQuantity, 
+        shopCardSum 
+    };
 };
 
 export default useProductAddCart;

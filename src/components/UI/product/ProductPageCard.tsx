@@ -46,7 +46,7 @@ export default function ProductPageCard({
             </CardContent>
             <CardActions>
                 <Button
-                    onClick={() => { productAddCart(1, productid, true, img, product, price) }}
+                    onClick={() => { productAddCart(1, productid, true) }}
                     className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
                     Kosárba
                 </Button>
