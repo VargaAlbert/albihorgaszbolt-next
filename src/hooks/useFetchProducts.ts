@@ -9,8 +9,8 @@ import axios from '@/services/api/axiosConfig';
 // Interface representing the return type of useFetchData
 export interface UseFetchData {
   data: productT[];
-/*   loading: boolean;
-  error: string | null; */
+  loading: boolean;
+  error: string | null; 
 }
 
 /**
@@ -76,7 +76,7 @@ const useFetchData = (): UseFetchData => {
   }, []); // The effect runs only on mount
 
   // Return an object containing fetched data, loading state, and error information
-  return { data };
+  return { data, loading, error };
 };
 
 export default useFetchData;

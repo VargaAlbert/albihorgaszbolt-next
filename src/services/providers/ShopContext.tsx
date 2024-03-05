@@ -56,7 +56,7 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
     const [auth, setAuth] = useState<authT>(initAuth);
     const [persist, setPersist] = useLocalStorage<boolean>("persist", false);
 
-    const { data } = useFetchData();
+    const { data, loading, error } = useFetchData();
 
     const { userInterfaceDisplay, setUserInterface, toggleDrawer } = useUserInterfaceDisplay();
 
@@ -75,7 +75,7 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
         productsData,
         setProductsData,
         /* --useFetchData-- */
-        data,
+        data, loading, error,
         /* --useUserInterfaceDisplay-- */
         userInterfaceDisplay, setUserInterface, toggleDrawer,
         /* --useProductAddCart-- */

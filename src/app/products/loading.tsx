@@ -1,6 +1,6 @@
 import React from 'react'
 import { LinearProgress, Skeleton } from '@mui/material'
-import ProductCardSkeleton from '@/components/UI/product/ProductCardSkeleton'
+import ProductCardSkeleton from '@/components/UI/product/ProductPageCartdSkeleton'
 
 export default function Loading() {
     const numberOfSkeletons = 6;

@@ -42,7 +42,7 @@ export default function ResponsiveAppBar() {
     };
 
     return (
-        <AppBar position="static" className='border-b-2'>
+        <AppBar position="static" className='border-b-2 min-w-screen-min'>
             <Container className="container mx-auto max-w-screen-2xl">
                 <Toolbar sx={{ display: { xs: 'flex' }, justifyContent: 'space-between' }} disableGutters>
                     <Box sx={{

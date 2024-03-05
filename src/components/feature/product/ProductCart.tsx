@@ -11,7 +11,7 @@ import {
     Typography,
     Button,
 } from '@mui/material';
-
+import { isFreeShoping } from '@/utils/isFreeShoping';
 import { Close, ShoppingCart } from '@mui/icons-material';
 import ProductCartCard from '@/components/UI/product/ProductCartCard';
 import LinkButton from '@/components/UI/navigation/LinkButton';
@@ -50,7 +50,7 @@ export default function ProductCart({ anchor }: prop) {
             </Box>
             <List>
                 {cartItems.map((item) => (
-                    <ProductCartCard key={item.productid} {...item} />
+                    <ProductCartCard key={item.productid} {...item} isPageCart={false} />
                 )).reverse()}
             </List>
 
@@ -60,7 +60,7 @@ export default function ProductCart({ anchor }: prop) {
                         Összesen:
                     </Typography>
                     <Typography variant="h5" color="text.primary" className="m-auto tracking-widest">
-                        {formatPrice(shopCardSum(true))} Ft
+                        {formatPrice(isFreeShoping(shopCardSum()))} Ft
                     </Typography>
                 </Box>
                 <Link

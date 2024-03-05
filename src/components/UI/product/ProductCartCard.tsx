@@ -14,14 +14,18 @@ import {
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import { formatPrice } from '@/utils/formatPrice';
 import ProductNumberInput from '@/components/UI/product/ProductNumberInput'
-export default function ProductCartCard({ productid, quantity }: CartItemT) {
 
-    const { productAddCart, removeFromCart } = useShopContext();
+type ProductCartCardProp = {
+    productid: string;
+    quantity: number;
+    isPageCart: boolean;
+}
 
-    const { data } = useFetchData();
+export default function ProductCartCard({ productid, quantity, isPageCart }: ProductCartCardProp) {
+
+    const { productAddCart, removeFromCart, data } = useShopContext();
 
     const item: productT | undefined = data.find((item) => item.productid === productid);
 
@@ -49,72 +53,97 @@ export default function ProductCartCard({ productid, quantity }: CartItemT) {
     }
 
     return (
-        <Card className="flex h-42 m-3 max-h-44 sm:w-11/12">
+        <Card
+            /* className="flex h-42 m-3 max-h-44 sm:w-11/12" */
+            className={isPageCart ? "flex h-42 m-3 w-11/12" : "flex h-42 m-3 max-h-44"}
+        >
             <CardMedia
                 component="img"
-                className="w-2/5 sm:w-44"
+                className={isPageCart ? "w-32 sm:w-44" : "w-2/5"}
                 image={img}
                 alt={`img-${productid}`}
             />
             <Box className="flex flex-col w-3/5 sm:w-full">
-
-                {/*   <CardContent className="flex-1 sm:hidden">
-                    <Typography component="div" className='flex justify-between'>
-                        <Typography className='text-xs'>
-                            {product}
+                {isPageCart ? (
+                    <>
+                        <CardContent className="hidden flex-1 sm:block">
+                            <Typography component="div" className='flex justify-between h-1/2'>
+                                <Typography className='w-11/12 text-xl'>
+                                    {product}
+                                </Typography>
+                                <Tooltip title="Törlés">
+                                    <IconButton onClick={deleteIlem} color="inherit" size="medium" className="p-0 h-8">
+                                        <DeleteIcon fontSize="medium" className='hover:text-primary-500' />
+                                    </IconButton>
+                                </Tooltip>
+                            </Typography>
+                            <Box className='flex justify-between items-center' >
+                                <Typography variant="h6" color="text.secondary">
+                                    {formatPrice(price)} Ft
+                                </Typography>
+                                <Box className="flex items-center justify-center pl-1 pb-1">
+                                    <ProductNumberInput value={quantity} onChange={handleChange} />
+                                </Box>
+                                <Typography variant="h5">
+                                    {formatPrice(quantityPrice)} Ft
+                                </Typography>
+                            </Box>
+                        </CardContent>
+                        <CardContent className="flex-1 flex flex-col justify-between sm:hidden">
+                            <Typography component="div" className='flex justify-between'>
+                                <Typography className='text-xs'>
+                                    {product}
+                                </Typography>
+                                <Tooltip title="Törlés">
+                                    <IconButton onClick={deleteIlem} color="inherit" size="medium" className="p-0 h-8">
+                                        <DeleteIcon fontSize="medium" className='hover:text-primary-500' />
+                                    </IconButton>
+                                </Tooltip>
+                            </Typography>
+                            <Typography
+                                variant="subtitle1"
+                                component="div"
+                                className='flex justify-between'>
+                                <Typography color="text.secondary">
+                                    {formatPrice(price)} Ft
+                                </Typography>
+                                <Typography>
+                                    {formatPrice(quantityPrice)} Ft
+                                </Typography>
+                            </Typography>
+                            <Box className="flex items-center justify-center pl-1">
+                                <ProductNumberInput value={quantity} onChange={handleChange} />
+                            </Box>
+                        </CardContent>
+                    </>
+                ) : (
+                    <CardContent className="flex-1 flex flex-col justify-between">
+                        <Typography component="div" className='flex justify-between'>
+                            <Typography className='text-xs'>
+                                {product}
+                            </Typography>
+                            <Tooltip title="Törlés">
+                                <IconButton onClick={deleteIlem} color="inherit" size="medium" className="p-0 h-8">
+                                    <DeleteIcon fontSize="medium" className='hover:text-primary-500' />
+                                </IconButton>
+                            </Tooltip>
                         </Typography>
-                        <Tooltip title="Törlés">
-                            <IconButton onClick={deleteIlem} color="inherit" size="medium" className="p-0 h-8">
-                                <DeleteIcon fontSize="medium" className='hover:text-primary-500' />
-                            </IconButton>
-                        </Tooltip>
-                    </Typography>
-                    <Typography
-                        variant="subtitle1"
-                        component="div"
-                        className='flex justify-between'
-                    >
-                        <Typography color="text.secondary">
-                            {formatPrice(price)} Ft
+                        <Typography
+                            variant="subtitle1"
+                            component="div"
+                            className='flex justify-between'>
+                            <Typography color="text.secondary">
+                                {formatPrice(price)} Ft
+                            </Typography>
+                            <Typography>
+                                {formatPrice(quantityPrice)} Ft
+                            </Typography>
                         </Typography>
-                        <Typography>
-                            {formatPrice(quantityPrice)} Ft
-                        </Typography>
-                    </Typography>
-                </CardContent> */}
-
-                <CardContent className="flex-1">
-
-                    <Typography component="div" className='flex justify-between h-1/2'>
-                        <Typography className='w-11/12 text-xl'>
-                            {product}
-                        </Typography>
-                        <Tooltip title="Törlés">
-                            <IconButton onClick={deleteIlem} color="inherit" size="medium" className="p-0 h-8">
-                                <DeleteIcon fontSize="medium" className='hover:text-primary-500' />
-                            </IconButton>
-                        </Tooltip>
-                    </Typography>
-
-                    <Box className='flex justify-between items-center' >
-                        <Typography color="text.secondary">
-                            {formatPrice(price)} Ft
-                        </Typography>
-
-                        <Box className="flex items-center justify-center pl-1 pb-1">
+                        <Box className="flex items-center justify-center pl-1">
                             <ProductNumberInput value={quantity} onChange={handleChange} />
                         </Box>
-
-                        <Typography>
-                            {formatPrice(quantityPrice)} Ft
-                        </Typography>
-                    </Box>
-
-
-                </CardContent>
-
-
-
+                    </CardContent>
+                )}
             </Box>
         </Card>
     )

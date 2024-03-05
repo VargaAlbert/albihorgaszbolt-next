@@ -35,8 +35,11 @@ const config: Config = {
         background: {
           "primary": "rgb(0, 0, 0)",
           "secondary": "rgb(39, 39, 39)",
-        }
-      }
+        },
+      },
+    },
+    minWidth: {
+      "screen-min": "350px",
     },
   },
   plugins: [],
