@@ -60,7 +60,7 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
 
     const { userInterfaceDisplay, setUserInterface, toggleDrawer } = useUserInterfaceDisplay();
 
-    const { cartItems, productAddCart, removeFromCart, cartAllQuantity, shopCardSum } = useProductAddCart(data);
+    const { cartItems, productAddCart, removeFromCart, cartAllQuantity, shopCardSum, findQuantityById } = useProductAddCart(data);
 
     const { filteredProducts, filters, setFilters } = useProductsFilter(productsData);
 
@@ -79,7 +79,7 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({
         /* --useUserInterfaceDisplay-- */
         userInterfaceDisplay, setUserInterface, toggleDrawer,
         /* --useProductAddCart-- */
-        cartItems, productAddCart, removeFromCart, cartAllQuantity, shopCardSum,
+        cartItems, productAddCart, removeFromCart, cartAllQuantity, shopCardSum, findQuantityById,
         /* --useProductsFilter-- */
         filteredProducts, filters, setFilters,
         /* --usePagination-- */

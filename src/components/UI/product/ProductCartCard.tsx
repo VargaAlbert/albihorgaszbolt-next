@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useShopContext } from '@/services/providers/ShopContext';
-import useFetchData from "@/hooks/useFetchProducts";
+
 import {
     Box,
     Card,
@@ -54,12 +54,11 @@ export default function ProductCartCard({ productid, quantity, isPageCart }: Pro
 
     return (
         <Card
-            /* className="flex h-42 m-3 max-h-44 sm:w-11/12" */
             className={isPageCart ? "flex h-42 m-3 w-11/12" : "flex h-42 m-3 max-h-44"}
         >
             <CardMedia
                 component="img"
-                className={isPageCart ? "w-32 sm:w-44" : "w-2/5"}
+                className={isPageCart ? "w-2/5 sm:w-44" : "w-2/5"}
                 image={img}
                 alt={`img-${productid}`}
             />
@@ -84,12 +83,12 @@ export default function ProductCartCard({ productid, quantity, isPageCart }: Pro
                                 <Box className="flex items-center justify-center pl-1 pb-1">
                                     <ProductNumberInput value={quantity} onChange={handleChange} />
                                 </Box>
-                                <Typography variant="h5">
+                                <Typography className="w-40 text-end" variant="h5">
                                     {formatPrice(quantityPrice)} Ft
                                 </Typography>
                             </Box>
                         </CardContent>
-                        <CardContent className="flex-1 flex flex-col justify-between sm:hidden">
+                        <CardContent className="w-full flex-1 flex flex-col justify-between sm:hidden">
                             <Typography component="div" className='flex justify-between'>
                                 <Typography className='text-xs'>
                                     {product}

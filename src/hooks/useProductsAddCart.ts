@@ -16,6 +16,7 @@ export interface UseProductAddCart {
   shopCardSum: () => number;
   removeFromCart: (id: string) => void;
   cartAllQuantity: () => number;
+  findQuantityById:(id: string) => number | null
   cartItems: CartItemT[];
 }
 
@@ -108,7 +109,6 @@ const useProductAddCart = (data: productT[]): UseProductAddCart => {
    * Finds the quantity of a product in the shopping cart by its id.
    * @param {string} id - Product identifier to search for.
    * @returns {number | null} - Quantity of the product if found, or null if not found.
-   * @private
    */
   const findQuantityById = (id: string): number | null => {
     return cartItems.find((item) => item.productid === id)?.quantity || null;
@@ -133,13 +133,13 @@ const useProductAddCart = (data: productT[]): UseProductAddCart => {
     return value;
   };
 
-  // Return an object containing cartItems, productAddCart, removeFromCart, and findQuantityById
   return {
     cartItems,
     productAddCart,
     removeFromCart,
     cartAllQuantity,
     shopCardSum,
+    findQuantityById,
   };
 };
 

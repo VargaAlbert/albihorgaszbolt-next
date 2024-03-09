@@ -1,11 +1,14 @@
 import axios from '@/services/api/axiosConfig';
 
-type ProductData = {
+type ProductsData = {
   products: productT[];
 };
 
-export async function fetchProducAll(): Promise<ProductData> {
-    await new Promise(res => setTimeout(res, 5000))  
+type ProductData = {
+    product: productT;
+};
+
+export async function fetchProducAll(): Promise<ProductsData> {
     try {
         const response = await axios.get<productT[]>(`/products`, {
             withCredentials: true
@@ -15,7 +18,7 @@ export async function fetchProducAll(): Promise<ProductData> {
             throw new Error('The query was unsuccessful.');
         }
 
-        const productData: ProductData = {
+        const productData: ProductsData = {
             products: response.data
         };
 
@@ -27,8 +30,7 @@ export async function fetchProducAll(): Promise<ProductData> {
     }
 }
 
-export async function fetchProducByCategory(category: string): Promise<ProductData> {
-    await new Promise(res => setTimeout(res, 5000))    
+export async function fetchProducByCategory(category: string): Promise<ProductsData> { 
     try {
         const response = await axios.get<productT[]>(`/products/${category}`, {
             withCredentials: true
@@ -38,7 +40,7 @@ export async function fetchProducByCategory(category: string): Promise<ProductDa
             throw new Error('The query was unsuccessful.');
         }
 
-        const productData: ProductData = {
+        const productData: ProductsData = {
             products: response.data
         };
 
@@ -48,4 +50,26 @@ export async function fetchProducByCategory(category: string): Promise<ProductDa
         console.error('Error fetching data:', error.message);
         throw new Error('Error fetching data.');
     }
-}
+} 
+ export async function fetchProductById(productId: string): Promise<ProductData> {   
+    try {
+        console.log(productId)
+        const response = await axios.get<productT>(`/products/product/${productId}`, {
+            withCredentials: true
+        });
+
+        if (!response.data) {
+            throw new Error('The query was unsuccessful.');
+        }
+
+        const productData: ProductData = {
+            product: response.data
+        };
+
+        return productData;
+    } catch (error: any) {
+
+        console.error('Error fetching data:', error.message);
+        throw new Error('Error fetching data.');
+    }
+}  
