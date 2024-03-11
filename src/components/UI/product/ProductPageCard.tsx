@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 
 import { Favorite } from '@mui/icons-material/';
+import Link from 'next/link';
 
 export default function ProductPageCard({
     productid,
@@ -29,21 +30,23 @@ export default function ProductPageCard({
 
     return (
         <Card className='max-w-sm h-full flex flex-col justify-between transform hover:scale-105 transition-transform duration-300 ease-in-out'>
-            <CardMedia
-                component="img"
-                alt={`img-${productid}`}
-                height="140"
-                image={img}
-                id="carouselImg"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h6" color="text.primary" component="div">
-                    {product}
-                </Typography>
-                <Typography variant="h4" color="text.primary">
-                    {formatPrice(price)} Ft
-                </Typography>
-            </CardContent>
+            <Link href={`/product/${productid}`} passHref>
+                <CardMedia
+                    component="img"
+                    alt={`img-${productid}`}
+                    height="140"
+                    image={img}
+                    id="carouselImg"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h6" color="text.primary" component="div">
+                        {product}
+                    </Typography>
+                    <Typography variant="h4" color="text.primary">
+                        {formatPrice(price)} Ft
+                    </Typography>
+                </CardContent>
+            </Link>
             <CardActions>
                 <Button
                     onClick={() => { productAddCart(1, productid, true) }}

@@ -116,8 +116,8 @@ export default function ProductCartCard({ productid, quantity, isPageCart }: Pro
                         </CardContent>
                     </>
                 ) : (
-                    <CardContent className="flex-1 flex flex-col justify-between">
-                        <Typography component="div" className='flex justify-between'>
+                    <CardContent className="!p-2 flex-1 flex flex-col justify-between">
+                        <Typography component="div" className='mb-2 flex justify-between'>
                             <Typography className='text-xs'>
                                 {product}
                             </Typography>
@@ -130,11 +130,11 @@ export default function ProductCartCard({ productid, quantity, isPageCart }: Pro
                         <Typography
                             variant="subtitle1"
                             component="div"
-                            className='flex justify-between'>
-                            <Typography color="text.secondary">
+                            className='mb-2 flex justify-between'> 
+                            <Typography color="text.secondary" className="text-xs">
                                 {formatPrice(price)} Ft
                             </Typography>
-                            <Typography>
+                            <Typography  className="text-sm">
                                 {formatPrice(quantityPrice)} Ft
                             </Typography>
                         </Typography>

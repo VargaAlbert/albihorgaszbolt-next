@@ -19,7 +19,6 @@ export default function ProductSide({ product }: ProductProps) {
                         width={"90%"}
                         height={300}
                         className='max-w-lg' />
-
                     <ProductSideMain productData={product} />
                 </section>
             </section>
